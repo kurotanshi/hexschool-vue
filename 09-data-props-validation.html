@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <title>Prop-Validation</title>
+  <style>
+    #app {
+      margin: 1em;
+      font-size: 1.2em;
+    }
+
+    .component div {
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <my-component :prop-a="msg"></my-component>
+  </div>
+
+  <script type="text/x-template" id="my-component">
+    <div class="component">
+      {{ propD }}
+    </div>
+  </script>
+
+  <script>
+    // register
+    Vue.component('my-component', {
+      props: {
+        parentMsg: null, // null 代表不檢查型別
+        propA: Number, // 限定數字
+        propB: [String, Number], // 多種條件可用 [ ] 隔開
+        propC: {
+          // 必要欄位，且限定字串型別
+          type: String,
+          // required: true
+        },
+        propD: {
+          // 數字型別，且有預設值
+          type: Number,
+          default: 100
+        },
+        propE: {
+          // Object 型別，代表可接受的是個物件或陣列的型別
+          type: Object,
+          default: function() {
+            return {
+              message: 'hello'
+            }
+          }
+        },
+        propF: {
+          // 自訂的條件驗證
+          validator: function(value) {
+            return value > 10
+          }
+        }
+      },
+      template: '#my-component',
+      data: function() {
+        return {
+          msg: 'Msg of Child!'
+        }
+      }
+    });
+
+    // a root instance
+    new Vue({
+      el: '#app',
+      data: {
+        msg: 123
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

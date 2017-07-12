@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <title>Component Registration</title>
+  <style>
+    #app {
+      margin: 1em;
+      font-size: 1.2em;
+    }
+
+    .component {
+      border: 1px solid #000;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <my-component></my-component>
+    <my-component></my-component>
+    <my-component></my-component>
+  </div>
+
+
+  <script>
+    // create a root instance
+    new Vue({
+      el: '#app',
+      components: {
+        // register
+        'my-component': {
+          template: '<div class="component">A custom component of Vue!</div>'
+        }
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

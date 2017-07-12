@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Slot</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <style>
+    #app {
+      margin: 1em;
+      font-size: 1.5em;
+    }
+
+    .parent,
+    .child {
+      margin: .5em;
+      padding: .5em;
+      font-size: 1.5em;
+    }
+
+    .parent {
+      background-color: #f1f1f1;
+    }
+
+    .child {
+      background-color: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <div class="parent">{{ msg }}</div>
+
+    <child>
+
+    </child>
+  </div>
+
+  <template id="child-template">
+    <div class="child">
+      <div>{{ msg }}</div>
+      <hr>
+      <slot> Default Slot Content </slot>
+    </div>
+  </template>
+
+  <script>
+    // children component
+    Vue.component('child', {
+      template: '#child-template',
+      data: function() {
+        return {
+          msg: 'I\'m child.'
+        };
+      }
+    });
+
+    // parent component
+    var parent = new Vue({
+      el: '#app',
+      data: {
+        msg: 'I\'m parent.'
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

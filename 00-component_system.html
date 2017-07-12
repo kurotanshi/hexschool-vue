@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+  <title>Vue - Component System</title>
+  <style type="text/css">
+    body {
+      font-size: 1.8em;
+    }
+
+    #app {
+      display: block;
+      width: 1000px;
+      height: 500px;
+      overflow: hidden;
+    }
+
+    .header {
+      width: 100%;
+      height: 80px;
+      line-height: 80px;
+      text-align: center;
+      background-color: #eee;
+    }
+
+    .main {
+      position: relative;
+      width: 60%;
+      height: 100%;
+      text-align: center;
+      background-color: #fff;
+      float: left;
+    }
+
+    .aside {
+      width: 40%;
+      height: 100%;
+      line-height: 300px;
+      text-align: center;
+      background-color: pink;
+      float: right;
+    }
+
+    .block {
+      display: inline-block;
+      width: 85px;
+      height: 85px;
+      background-color: green;
+      margin: 20px;
+      color: #fff;
+      font-size: 26px;
+      line-height: 85px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <custom-header msg="Header"></custom-header>
+    <custom-main></custom-main>
+    <custom-aside></custom-aside>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <script>
+    var CustomBlock = Vue.extend({
+      data () {
+        return {
+          content: 'B'
+        }
+      },
+      template: '<div class="block">{{ content }}</div>',
+    });
+
+    var CustomMain = Vue.extend({
+      template: '<div class="main">' +
+        '<div style="margin: 10px;">MAIN</div>' +
+        '<custom-block></custom-block>' +
+        '<custom-block></custom-block>' +
+        '<custom-block></custom-block>' +
+        '<custom-block></custom-block>' +
+        '<custom-block></custom-block>' +
+        '<custom-block></custom-block>' +
+        '</div>',
+      components: {
+        CustomBlock
+      }
+    });
+
+    var CustomHeader = Vue.extend({
+      // template: '<div class="header"> {{ greet }} {{ msg }}</div>',
+      render: function(createElement){
+        return createElement('div', {
+          class: 'header'
+        }, [this.greet, ' ', this.msg]);
+      },
+      data () {
+        return {
+          greet: 'Hi'
+        }
+      },
+      props: {
+        msg: {
+          type: String,
+          default: 'Hello'
+        }
+      }
+    });
+
+    var CustomAside = Vue.extend({
+      template: '<div class="aside">Aside</div>',
+    });
+
+    new Vue({
+      el: '#app',
+      components: {
+        CustomMain,
+        CustomHeader,
+        CustomAside
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

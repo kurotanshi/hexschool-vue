@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <style>
+    body {
+      font-size: 1.5em;
+    }
+
+    #app {
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+
+<div id="app">
+  <h1>{{ count }}</h1>
+  <button @click="updateEvent">Update</button>
+</div>
+
+<button id="del">Del</button>
+
+
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      count: 0
+    },
+    methods: {
+      updateEvent: function() {
+        this.count += 1;
+      }
+    },
+    beforeCreate: function() {
+      // 元件實體剛被建立，屬性計算之前。
+      console.log('beforeCreate - this.count: ', this.count);
+      console.log('beforeCreate - this.$el: ', this.$el);
+    },
+    created: function() {
+      // 元件實體已建立，屬性已綁定，但 DOM 還沒生成。
+      console.log('created - this.count: ', this.count);
+      console.log('created - this.$el: ', this.$el);
+    },
+    beforeMount: function() {
+      // 模板 (template) 編譯或掛載至 HTML 之前
+      console.log('beforeMount - this.$el: ', this.$el);
+    },
+    mounted: function() {
+      // 模板 (template) 編譯或掛載至 HTML 之後
+      console.log('mounted - this.$el: ', this.$el);
+    },
+    beforeUpdate: function() {
+      // 元件被更新之前
+      console.log('beforeUpdate: ',
+        this.$el.querySelector('h1').innerText,
+        this.count);
+    },
+    updated: function() {
+      // 元件被更新之後
+      console.log('updated: ',
+        this.$el.querySelector('h1').innerText,
+        this.count);
+    },
+    beforeDestroy: function() {
+      // 移除 vue instance 之前
+      console.log('beforeDestroy');
+    },
+    destroyed: function() {
+      // 移除 vue instance 之後
+      console.log('destroyed');
+    }
+  });
+
+  document.getElementById('del').addEventListener('click', function() {
+    vm.$destroy();
+  });
+</script>
+
+
+</html>

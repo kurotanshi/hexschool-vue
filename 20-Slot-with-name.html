@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Slot</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <style>
+    #app {
+      margin: 1em;
+      font-size: 1.5em;
+    }
+
+    p,
+    .header,
+    .footer {
+      margin: .5em;
+      padding: .5em;
+      font-size: 1.5em;
+    }
+
+    .header {
+      background-color: #f1f1f1;
+    }
+
+    .footer {
+      background-color: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+
+    <child>
+
+      <h1 class="header" slot="header">這是 HEADER</h1>
+
+      <p>A paragraph for the main content.</p>
+      <p>And another one.</p>
+
+      <p class="footer" slot="footer">這是 FOOTER</p>
+
+    </child>
+
+  </div>
+
+
+  <template id="child-template">
+    <div class="container">
+      <header>
+        <slot name="header">Default Header</slot>
+      </header>
+      <hr>
+
+      <main>
+        <slot>Default Body</slot>
+      </main>
+
+      <hr>
+      <footer>
+        <slot name="footer">Default Footer</slot>
+      </footer>
+    </div>
+  </template>
+
+  <script>
+    // children component
+    Vue.component('child', {
+      template: '#child-template'
+    });
+
+    // parent component
+    var parent = new Vue({
+      el: '#app'
+    });
+  </script>
+
+
+</body>
+
+</html>

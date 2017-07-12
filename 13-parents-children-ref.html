@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <title></title>
+  <style>
+    #app {
+      margin: 1em;
+      font-size: 1.2em;
+    }
+
+    .component div {
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <my-component ref="comp1" :parent-msg="msg"></my-component>
+    <my-component2 ref="comp2"></my-component2>
+    <my-component3 ref="comp3"></my-component3>
+
+    <hr>
+    <div> {{ msg }}</div>
+  </div>
+
+  <script type="text/x-template" id="my-component">
+    <div class="component">
+      <div> ParentMsg: {{ parentMsg }} </div>
+      <div> ChildMsg: {{ msg }} </div>
+    </div>
+  </script>
+
+  <script>
+    Vue.component('my-component2', {
+      template: '<div>{{ msg }}</div>',
+      data() {
+        return {
+          msg: 'Hi COMP2'
+        }
+      }
+    });
+
+    Vue.component('my-component3', {
+      template: '<div>{{ msg }}</div>',
+      data() {
+        return {
+          msg: 'Hi COMP3'
+        }
+      }
+    });
+
+    // register
+    Vue.component('my-component', {
+      props: ["parentMsg"],
+      template: '#my-component',
+      mounted() {
+
+        console.log("$parent: ", this.$parent.msg);
+
+        window.setTimeout(() => {
+          this.$parent.msg = 'HELLO!';
+        }, 3000);
+
+      },
+      data: function() {
+        return {
+          msg: 'Msg of Child!'
+        }
+      }
+    });
+
+    // a root instance
+    new Vue({
+      el: '#app',
+      data: {
+        msg: 'Msg of Parent!'
+      },
+      mounted() {
+        console.log('$children1: ', this.$refs.comp1.msg);
+        console.log('$children2: ', this.$refs.comp2.msg);
+        console.log('$children3: ', this.$refs.comp3.msg);
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

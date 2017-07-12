@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.js"></script>
+  <style>
+    #app {
+      overflow: hidden;
+      height: 600px;
+    }
+
+    button {
+      font-size: 2em;
+      display: block;
+      margin: 1em;
+    }
+
+    .left,
+    .right {
+      float: left;
+      height: 100%;
+    }
+
+    .left {
+      width: 25%;
+      background-color: #eee;
+    }
+
+    .right {
+      width: 70%;
+      background-color: #ccc;
+    }
+
+    .channel {
+      display: block;
+      border: 1px solid #555;
+      padding: 1em;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+
+    <div class="left">
+      <button @click="currentView = 'channel-1'">Channel 1</button>
+      <button @click="currentView = 'channel-2'">Channel 2</button>
+      <button @click="currentView = 'channel-3'">Channel 3</button>
+    </div>
+
+    <div class="right">
+      <component :is="currentView"></component>
+    </div>
+
+  </div>
+
+  <script type="text/x-template" id="channel_1">
+    <div class="channel">
+      <h2>Channel 1</h2>
+      <p>
+        「救救長毛驢，Air展示機，前情侶臉書鬧翻，I，荒唐警瘋SM，是不是撒嬌，她最心疼和抱歉的是家人受到打擾，雨真的很大，尼克大勝12分，林書豪官方T恤明在台開賣，遠比上Google搜尋更有效率，覺得不夠？」
+      </p>
+      <p>{{count}}</p>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="channel_2">
+    <div class="channel">
+      <h2>Channel 2</h2>
+      <p>
+        「這起地震是板塊碰撞擠壓所致，女搭機未保濕，林書豪官方T恤明在台開賣，你會不三七二十一、七七四十九，但記者訪問時，不管是真是假，遠比上Google搜尋更有效率，搖好大！」
+      </p>
+      <p>{{count}}</p>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="channel_3">
+    <div class="channel">
+      <h2>Channel 3</h2>
+      <p>
+        「以後拜師學藝找名嘴可能會比較快，嘖嘖~，我可以自豪地說，裸少年抓青蛙雕像被嫌礙眼，亞職熱身賽，它有那個萊克多巴胺，大學副教授，眼明手快，65萬人大考，韓媒澄清台灣鯛，...，血友病男童絕食，美國在台協會發言人表示：美國牛肉沒有任何的問題，希望老天有眼讓他快點好起來QQ。」
+      </p>
+      <p>{{count}}</p>
+    </div>
+  </script>
+
+  <script>
+    Vue.component('channel-1', {
+      template: '#channel_1',
+      // activated() {
+      //   this.count++;
+      // },
+      created() {
+        console.log(123);
+      },
+      data() {
+        return {
+          count: 0
+        };
+      }
+    });
+
+    Vue.component('channel-2', {
+      template: '#channel_2',
+      activated() {
+        this.count++;
+      },
+      data() {
+        return {
+          count: 0
+        };
+      }
+    });
+
+    Vue.component('channel-3', {
+      template: '#channel_3',
+      activated() {
+        this.count++;
+      },
+      data() {
+        return {
+          count: 0
+        };
+      }
+    });
+
+    new Vue({
+      el: '#app',
+      data: {
+        currentView: 'channel-1'
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>
